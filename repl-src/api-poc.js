@@ -65,38 +65,6 @@ function itemParser(str) {
   return str.split(delim).slice(start - 1, end || start).join(delim)
 }
 
-function charSetter(str) {
-  return str
-}
-
-function lineSetter(str) {
-  return str
-}
-
-function wordSetter(str) {
-  return str
-}
-
-function itemSetter(str) {
-  return str
-}
-
-function charDeleter(str) {
-  return str
-}
-
-function lineDeleter(str) {
-  return str
-}
-
-function wordDeleter(str) {
-  return str
-}
-
-function itemDeleter(str) {
-  return str
-}
-
 function chunker(start, parser, initialItems = {}) {
   const obj = {
     start,
@@ -133,6 +101,7 @@ const char = (start) => chunker(start, charParser)
 const line = (start) => chunker(start, lineParser)
 const word = (start) => chunker(start, wordParser)
 const item = (start) => chunker(start, itemParser)
+
 const put = (newStr) => {
   const obj = {
     newStr
@@ -143,27 +112,9 @@ const put = (newStr) => {
 
   return obj
 }
+
 const remove = () => {
   const obj = {
   }
   return deleter(obj)
 }
-
-//Unit Tests
-console.log('char(2).of("abc")', char(2).of("abc"))
-console.log('char(2).to(3).of("abcd")', char(2).to(3).of("abcd"))
-console.log('line(2).of("abc\\ndef\\nghi")', line(2).of("abc\ndef\nghi"))
-console.log('line(2).to(3).of("abc\\ndef\\nghi")', line(2).to(3).of("abc\ndef\nghi"))
-console.log('char(1).to(2).of(line(3).of("abc\ndef\nghi"))', char(1).to(2).of(line(3).of("abc\ndef\nghi")))
-console.log('item(4).of("a,b,c,d,e,f,g")', item(4).of("a,b,c,d,e,f,g"))
-console.log('item(4).withDelimiter(".").of("a.b.c.d.e.f.g")', item(4).withDelimiter(".").of("a.b.c.d.e.f.g"))
-console.log('item(4).to(5).of("a,b,c,d,e,f,g")', item(4).to(5).of("a,b,c,d,e,f,g"))
-console.log('item(4).to(-1).of("a,b,c,d,e,f,g")', item(4).to(-1).of("a,b,c,d,e,f,g"))
-console.log('char(2).of(item(4).to(5).of("a,b,c,d,e,f,g"))', char(2).of(item(4).to(5).of("a,b,c,d,e,f,g")))
-console.log('word(2).of("Hello, World. I love you!")', word(2).of("Hello, World. I love you!"))
-console.log('word(2).to(4).of("Hello, World. I love you!")', word(2).to(4).of("Hello, World. I love you!"))
-console.log('word(2).to(4).of("Hello, World. I love you!")', word(2).to(-1).of("Hello, World. I love you!"))
-console.log('put("World").into.word(2).of("Hello, Bob!")', put("World").into.word(2).of("Hello, Bob!"))
-
-
-
