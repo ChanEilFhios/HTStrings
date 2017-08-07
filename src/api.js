@@ -11,6 +11,8 @@ function of(str) {
 function to(end) {
   if ((typeof end !== 'number') || (end % 1 !== 0)) {
     throw new TypeError("Non-integer end index.")
+  } else if (end < this.parameters.start) {
+    throw new RangeError("End must be >= start.")
   }
 
   const returnObj = {
@@ -24,6 +26,8 @@ function to(end) {
 function word(start) {
   if ((typeof start !== 'number') || (start % 1 !== 0)) {
     throw new TypeError("Non-integer start index.")
+  } else if (start < 1) {
+    throw new RangeError("Start index must be > 0.")
   }
 
   const returnObj = {

@@ -20,6 +20,12 @@ describe('word', () => {
     expect(errorTester).toThrow("Non-integer start index.")
   })
 
+  it('throws an error if start parameter < 1', () => {
+    const errorTester = () => word(0)
+    expect(errorTester).toThrow(RangeError)
+    expect(errorTester).toThrow("Start index must be > 0.")
+  })
+
   it('returns an object with a start property set from the parameter', () => {
     expect(word(4)).toMatchObject({ parameters: { start: 4 } })
   })
@@ -68,6 +74,12 @@ describe('to', () => {
 
   it('returns an object with start property set to original value', () => {
     expect(to(5)).toMatchObject({ parameters: { start: 4 } })
+  })
+
+  it('throws an error if end < start', () => {
+    const errorTester = () => to(3)
+    expect(errorTester).toThrow(RangeError)
+    expect(errorTester).toThrow("End must be >= start.")
   })
 
   it('returns an object with an of function', () => {
