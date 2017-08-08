@@ -122,3 +122,33 @@ describe('of', () => {
     }
   })
 })
+
+describe('word parsing', () => {
+  it('can fetch a word in the middle of a string', () => {
+    expect(word(2).of('one two three')).toBe("two")
+  })
+
+  it('can fetch the first word', () => {
+    expect(word(1).of('one two three')).toBe("one")
+  })
+
+  it('can fetch the last word', () => {
+    expect(word(3).of('one two three')).toBe("three")
+  })
+
+  it('can fetch the only word', () => {
+    expect(word(1).of('one')).toBe("one")
+  })
+
+  it('can fetch a range of words', () => {
+    expect(word(2).to(3).of('one two three four')).toBe("two three")
+  })
+
+  it('can fetch a range of words from the front', () => {
+    expect(word(1).to(3).of('one two three four')).toBe("one two three")
+  })
+
+  it('can fetch a range of words from the back', () => {
+    expect(word(2).to(4).of('one two three four')).toBe("two three four")
+  })
+})

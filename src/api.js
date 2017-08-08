@@ -1,11 +1,12 @@
 const { wordParser } = require('./parser')
+const { get } = require('./actions')
 
 function of(str) {
   if (typeof str !== 'string') {
     throw new TypeError("Non-string passed.")
   }
 
-  return ""
+  return this.parameters.action(this.parameters.parser(str, this.parameters.start, this.parameters.end))
 }
 
 function to(end) {
@@ -33,7 +34,8 @@ function word(start) {
   const returnObj = {
     parameters: {
       start,
-      parser: wordParser
+      parser: wordParser,
+      action: get
     }
   }
   returnObj.of = of.bind(returnObj)
