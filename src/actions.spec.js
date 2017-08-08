@@ -36,6 +36,10 @@ describe('remove', () => {
   })
 
   it('handles empty before', () => {
-    expect(remove({before:'', beforeSep:'', match:'one', afterSep:' ', after:'two'})).toBe('two')
+    expect(remove({ before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two' })).toBe('two')
+  })
+
+  it('handles empty after', () => {
+    expect(remove({ before: 'one', beforeSep: '', match: 'two', afterSep: '', after: '' })).toBe('one')
   })
 })
