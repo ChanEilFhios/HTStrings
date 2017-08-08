@@ -1,6 +1,66 @@
-const { word, del } = require('./api')
+const { word, del, put } = require('./api')
 const { wordParser } = require('./parser')
-const { get, remove } = require('./actions')
+const { get, remove, replace } = require('./actions')
+
+describe('into', () => {
+  let into
+
+  beforeEach(() => {
+    into = put('test').into
+  })
+
+  it('returns an object with a newStr parameter set previously by put', () => {
+    expect(into()).toMatchObject({ parameters: { newStr: 'test' } })
+  })
+
+  it('returns an object with an action parameter set to the into action', () => {
+    expect(typeof into().parameters.action).toBe('function')
+  })
+
+  it('returns an object with a property called word that is a function', () => {
+    expect(typeof into().word).toBe('function')
+  })
+
+  it('replaces the indicated word', () => {
+    expect(put('test').into().word(2).of('one two three')).toBe('one test three')
+  })
+})
+
+describe('put', () => {
+  it('throws an error if no parameter', () => {
+    const errorTester = () => put()
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow("Must have a string to insert.")
+  })
+
+  it('returns an object with a newStr property set from the parameter', () => {
+    expect(put("test")).toMatchObject({ parameters: { newStr: "test" } })
+  })
+
+  it('returns an object with a property called into that is a function', () => {
+    expect(typeof put("test").into).toBe('function')
+  })
+
+  it('returns an object with a property called after that is a function', () => {
+    expect(typeof put("test").after).toBe('function')
+  })
+
+  it('returns an object with a property called before that is a function', () => {
+    expect(typeof put("test").before).toBe('function')
+  })
+
+  it('returns an object without a property called to', () => {
+    expect(put("test")).not.toHaveProperty('to')
+  })
+
+  it('returns an object without a property called of', () => {
+    expect(put("test")).not.toHaveProperty('of')
+  })
+
+  it('returns an object without a property called word', () => {
+    expect(put("test")).not.toHaveProperty('word')
+  })
+})
 
 describe('del', () => {
   it('ignores parameters', () => {
@@ -17,6 +77,18 @@ describe('del', () => {
 
   it('word function returns an object with action property set to remove', () => {
     expect(del().word(4)).toMatchObject({ parameters: { action: remove } })
+  })
+
+  it('returns an object with a property called word that is a function', () => {
+    expect(typeof del("test").word).toBe('function')
+  })
+
+  it('returns an object without a property called to', () => {
+    expect(del("test")).not.toHaveProperty('to')
+  })
+
+  it('returns an object without a property called of', () => {
+    expect(del("test")).not.toHaveProperty('of')
   })
 
   it('removes the indicated word', () => {

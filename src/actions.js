@@ -22,7 +22,19 @@ function remove(matches) {
   return ''
 }
 
+function replace(newStr, matches) {
+  if (newStr === undefined) {
+    return ''
+  }
+  if (matches) {
+    return matches.before + matches.beforeSep + newStr + matches.afterSep + matches.after
+  }
+
+  return newStr
+}
+
 module.exports = {
   get,
-  remove
+  remove,
+  replace
 }

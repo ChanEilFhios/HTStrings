@@ -1,4 +1,4 @@
-const { get, remove } = require('./actions.js')
+const { get, remove, replace } = require('./actions.js')
 
 const sample = {
   before: 'one',
@@ -7,6 +7,28 @@ const sample = {
   afterSep: ' ',
   after: 'three'
 }
+
+describe('replace', () => {
+  it('returns the new string if no matches parameters', () => {
+    expect(replace('test')).toBe('test')
+  })
+
+  it('returns an empty string if no parameters', () => {
+    expect(replace()).toBe('')
+  })
+
+  it('returns a new string replacing match with newStr', () => {
+    expect(replace('test', sample)).toBe('one,test three')
+  })
+
+  it('returns a new string replacing match with newStr with empty before', () => {
+    expect(replace('test', { before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two' })).toBe('test two')
+  })
+
+  it('returns a new string replacing match with newStr with empty after', () => {
+    expect(replace('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '' })).toBe('one test')
+  })
+})
 
 describe('get', () => {
   it('retrieves the match', () => {
