@@ -1,5 +1,48 @@
-const { word } = require('./api')
+const { word, del } = require('./api')
 const { wordParser } = require('./parser')
+const { get, remove } = require('./actions')
+
+describe('del', () => {
+  it('ignores parameters', () => {
+    expect(() => del(1)).not.toThrow()
+  })
+
+  it('returns an object with a property word that is a function', () => {
+    expect(typeof del().word).toBe('function')
+  })
+
+  it('returns an object with an action property set to remove', () => {
+    expect(del()).toMatchObject({ parameters: { action: remove } })
+  })
+
+  it('word function returns an object with action property set to remove', () => {
+    expect(del().word(4)).toMatchObject({ parameters: { action: remove } })
+  })
+
+  it('removes the indicated word', () => {
+    expect(del().word(2).of('one two three four')).toBe('one three four')
+  })
+
+  it('removes the first word', () => {
+    expect(del().word(1).of('one two three four')).toBe('two three four')
+  })
+
+  it('removes the last word', () => {
+    expect(del().word(4).of('one two three four')).toBe('one two three')
+  })
+
+  it('removes a range of words', () => {
+    expect(del().word(2).to(3).of('one two three four')).toBe('one four')
+  })
+
+  it('removes a range of words at the beginning', () => {
+    expect(del().word(1).to(3).of('one two three four')).toBe('four')
+  })
+
+  it('removes a range of words at the end', () => {
+    expect(del().word(2).to(4).of('one two three four')).toBe('one')
+  })
+})
 
 describe('word', () => {
   it('throws an error if no parameter', () => {
@@ -32,6 +75,10 @@ describe('word', () => {
 
   it('returns an object with parser set to wordParser', () => {
     expect(word(4)).toMatchObject({ parameters: { parser: wordParser } })
+  })
+
+  it('returns an object with an action property set to get', () => {
+    expect(word(4)).toMatchObject({ parameters: { action: get } })
   })
 
   it('returns an object with an of function', () => {
