@@ -24,6 +24,90 @@ describe('into', () => {
   it('replaces the indicated word', () => {
     expect(put('test').into().word(2).of('one two three')).toBe('one test three')
   })
+
+  it('replaces a range of words', () => {
+    expect(put('test').into().word(2).to(3).of('one two three four')).toBe('one test four')
+  })
+
+  it('replaces a range of words at the front', () => {
+    expect(put('test').into().word(1).to(3).of('one two three four')).toBe('test four')
+  })
+
+  it('replaces a range of words at the end', () => {
+    expect(put('test').into().word(2).to(4).of('one two three four')).toBe('one test')
+  })
+})
+
+describe('before', () => {
+  let before
+
+  beforeEach(() => {
+    before = put('test').before
+  })
+
+  it('returns an object with a newStr parameter set previously by put', () => {
+    expect(before()).toMatchObject({ parameters: { newStr: 'test' } })
+  })
+
+  it('returns an object with an action parameter set to the before action', () => {
+    expect(typeof before().parameters.action).toBe('function')
+  })
+
+  it('returns an object with a property called word that is a function', () => {
+    expect(typeof before().word).toBe('function')
+  })
+
+  it('returns a new string with newStr added before the indicated word', () => {
+    expect(put('test').before().word(2).of('one two three')).toBe('one test two three')
+  })
+
+  it('returns a new string with newStr added before a range of words', () => {
+    expect(put('test').before().word(2).to(3).of('one two three four')).toBe('one test two three four')
+  })
+
+  it('returns a new string with newStr added before a range of words at the front', () => {
+    expect(put('test').before().word(1).to(3).of('one two three four')).toBe('test one two three four')
+  })
+
+  it('returns a new string with newStr added before a range of words at the end', () => {
+    expect(put('test').before().word(2).to(4).of('one two three four')).toBe('one test two three four')
+  })
+})
+
+describe('after', () => {
+  let after
+
+  beforeEach(() => {
+    after = put('test').after
+  })
+
+  it('returns an object with a newStr parameter set previously by put', () => {
+    expect(after()).toMatchObject({ parameters: { newStr: 'test' } })
+  })
+
+  it('returns an object with an action parameter set to the before action', () => {
+    expect(typeof after().parameters.action).toBe('function')
+  })
+
+  it('returns an object with a property called word that is a function', () => {
+    expect(typeof after().word).toBe('function')
+  })
+
+  it('returns a new string with newStr added after the indicated word', () => {
+    expect(put('test').after().word(2).of('one two three')).toBe('one two test three')
+  })
+
+  it('returns a new string with newStr added after a range of words', () => {
+    expect(put('test').after().word(2).to(3).of('one two three four')).toBe('one two three test four')
+  })
+
+  it('returns a new string with newStr added after a range of words at the front', () => {
+    expect(put('test').after().word(1).to(3).of('one two three four')).toBe('one two three test four')
+  })
+
+  it('returns a new string with newStr added after a range of words at the end', () => {
+    expect(put('test').after().word(2).to(4).of('one two three four')).toBe('one two three four test')
+  })
 })
 
 describe('put', () => {

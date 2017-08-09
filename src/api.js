@@ -1,5 +1,5 @@
 const { wordParser } = require('./parser')
-const { get, remove, replace } = require('./actions')
+const { get, remove, replace, putBefore, putAfter } = require('./actions')
 
 function addFunctions(obj) {
   if (obj.parameters.newStr === undefined || obj.parameters.action !== undefined) {
@@ -32,11 +32,15 @@ function into() {
 }
 
 function before() {
-
+  return addFunctions({
+    parameters: Object.assign({}, this.parameters, { action: (a) => putBefore(this.parameters.newStr, a) })
+  })
 }
 
 function after() {
-
+  return addFunctions({
+    parameters: Object.assign({}, this.parameters, { action: (a) => putAfter(this.parameters.newStr, a) })
+  })
 }
 
 function of(str) {

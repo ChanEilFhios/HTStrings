@@ -1,4 +1,4 @@
-const { get, remove, replace } = require('./actions.js')
+const { get, remove, replace, putBefore, putAfter } = require('./actions.js')
 
 const sample = {
   before: 'one',
@@ -27,6 +27,50 @@ describe('replace', () => {
 
   it('returns a new string replacing match with newStr with empty after', () => {
     expect(replace('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '' })).toBe('one test')
+  })
+})
+
+describe('putBefore', () => {
+  it('returns the new string if no matches parameters', () => {
+    expect(putBefore('test')).toBe('test')
+  })
+
+  it('returns an empty string if no parameters', () => {
+    expect(putBefore()).toBe('')
+  })
+
+  it('returns a new string replacing match with newStr', () => {
+    expect(putBefore('test', sample)).toBe('one,test two three')
+  })
+
+  it('returns a new string replacing match with newStr with empty before', () => {
+    expect(putBefore('test', { before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two' })).toBe('test one two')
+  })
+
+  it('returns a new string replacing match with newStr with empty after', () => {
+    expect(putBefore('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '' })).toBe('one test two')
+  })
+})
+
+describe('putAfter', () => {
+  it('returns the new string if no matches parameters', () => {
+    expect(putAfter('test')).toBe('test')
+  })
+
+  it('returns an empty string if no parameters', () => {
+    expect(putAfter()).toBe('')
+  })
+
+  it('returns a new string replacing match with newStr', () => {
+    expect(putAfter('test', sample)).toBe('one,two test three')
+  })
+
+  it('returns a new string replacing match with newStr with empty before', () => {
+    expect(putAfter('test', { before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two' })).toBe('one test two')
+  })
+
+  it('returns a new string replacing match with newStr with empty after', () => {
+    expect(putAfter('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '' })).toBe('one two test')
   })
 })
 
