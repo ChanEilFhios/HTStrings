@@ -12,11 +12,11 @@ const wordConfig = {
 
 function wordParser(str, start, end) {
   if (typeof str !== 'string') {
-    throw new TypeError("First parameter must be a string.")
+    throw new TypeError('First parameter must be a string.')
   }
 
   if ((typeof start !== 'number') || (start % 1 !== 0)) {
-    throw new TypeError("Non-integer start index.")
+    throw new TypeError('Non-integer start index.')
   }
 
   if (start < 1) {
@@ -24,7 +24,7 @@ function wordParser(str, start, end) {
   }
 
   if (end !== undefined && ((typeof end !== 'number') || (end % 1 !== 0))) {
-    throw new TypeError("Non-integer end index.")
+    throw new TypeError('Non-integer end index.')
   }
 
   if (end !== undefined && end < start) {

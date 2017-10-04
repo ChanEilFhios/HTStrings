@@ -4,49 +4,49 @@ describe('wordParser', () => {
   it('throws an error if no parameters', () => {
     const errorTester = () => wordParser()
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("First parameter must be a string.")
+    expect(errorTester).toThrow('First parameter must be a string.')
   })
 
   it('throws an error if first parameter is not a string', () => {
     const errorTester = () => wordParser(1)
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("First parameter must be a string")
+    expect(errorTester).toThrow('First parameter must be a string')
   })
 
   it('throws an error if no start index', () => {
-    const errorTester = () => wordParser("")
+    const errorTester = () => wordParser('')
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer start index")
+    expect(errorTester).toThrow('Non-integer start index')
   })
 
   it('throws an error if non-numeric start index', () => {
-    const errorTester = () => wordParser("", "")
+    const errorTester = () => wordParser('', '')
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer start index")
+    expect(errorTester).toThrow('Non-integer start index')
   })
 
   it('throws an error if float start index', () => {
-    const errorTester = () => wordParser("", 7.5)
+    const errorTester = () => wordParser('', 7.5)
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer start index")
+    expect(errorTester).toThrow('Non-integer start index')
   })
 
   it('throws an error if non-numeric end index', () => {
-    const errorTester = () => wordParser("", 1, "")
+    const errorTester = () => wordParser('', 1, '')
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer end index")
+    expect(errorTester).toThrow('Non-integer end index')
   })
 
   it('throws an error if float end index', () => {
-    const errorTester = () => wordParser("", 1, 7.5)
+    const errorTester = () => wordParser('', 1, 7.5)
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer end index")
+    expect(errorTester).toThrow('Non-integer end index')
   })
 
   it('throws an error if start index < 1', () => {
-    const errorTester = () => wordParser("", 0)
+    const errorTester = () => wordParser('', 0)
     expect(errorTester).toThrow(RangeError)
-    expect(errorTester).toThrow("Start index must be > 0.")
+    expect(errorTester).toThrow('Start index must be > 0.')
   })
 
   it('returns an object of the correct shape', () => {

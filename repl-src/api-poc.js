@@ -1,4 +1,4 @@
-const regex = /\W*(\w*)/gy;
+const regex = /\W*(\w*)/gy
 
 function of(str) {
   return this.parser(str)
@@ -20,7 +20,7 @@ function charParser(str) {
 }
 
 function lineParser(str) {
-  this.delim = "\n"
+  this.delim = '\n'
   return itemParser.call(this, str)
 }
 

@@ -69,20 +69,20 @@ const before = (newStr, str, start, end, parserConfig = wordConfig) => {
 //Words
 console.log(parser(str, 3, 5))
 console.log(get(str, 3))
-console.log(into("oops", str, 3, 5))
-console.log(after("oops", str, 3, 5))
-console.log(before("oops", str, 3, 5))
+console.log(into('oops', str, 3, 5))
+console.log(after('oops', str, 3, 5))
+console.log(before('oops', str, 3, 5))
 
 //Lines
 console.log(parser(str, 3, 5, lineConfig))
 console.log(get(str, 3, 3, lineConfig))
-console.log(into("oops", str, 3, 5, lineConfig))
-console.log(after("oops", str, 3, 5, lineConfig))
-console.log(before("oops", str, 3, 5, lineConfig))
+console.log(into('oops', str, 3, 5, lineConfig))
+console.log(after('oops', str, 3, 5, lineConfig))
+console.log(before('oops', str, 3, 5, lineConfig))
 
 //Items
 console.log(parser(str, 3, 5, itemConfig))
 console.log(get(str, 3, 3, itemConfig))
-console.log(into("oops", str, 3, 5, itemConfig))
-console.log(after("oops", str, 3, 5, itemConfig))
-console.log(before("oops", str, 3, 5, itemConfig))
+console.log(into('oops', str, 3, 5, itemConfig))
+console.log(after('oops', str, 3, 5, itemConfig))
+console.log(before('oops', str, 3, 5, itemConfig))

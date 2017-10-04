@@ -45,7 +45,7 @@ function after() {
 
 function of(str) {
   if (typeof str !== 'string') {
-    throw new TypeError("Non-string passed.")
+    throw new TypeError('Non-string passed.')
   }
 
   return this.parameters.action(this.parameters.parser(str, this.parameters.start, this.parameters.end))
@@ -53,9 +53,9 @@ function of(str) {
 
 function to(end) {
   if ((typeof end !== 'number') || (end % 1 !== 0)) {
-    throw new TypeError("Non-integer end index.")
+    throw new TypeError('Non-integer end index.')
   } else if (end < this.parameters.start) {
-    throw new RangeError("End must be >= start.")
+    throw new RangeError('End must be >= start.')
   }
 
   return addFunctions({
@@ -67,7 +67,7 @@ const del = () => addFunctions({ parameters: { action: remove } })
 
 function put(str) {
   if (str === undefined) {
-    throw new TypeError("Must have a string to insert.")
+    throw new TypeError('Must have a string to insert.')
   }
 
   return addFunctions({
@@ -79,9 +79,9 @@ function put(str) {
 
 function word(start) {
   if ((typeof start !== 'number') || (start % 1 !== 0)) {
-    throw new TypeError("Non-integer start index.")
+    throw new TypeError('Non-integer start index.')
   } else if (start < 1) {
-    throw new RangeError("Start index must be > 0.")
+    throw new RangeError('Start index must be > 0.')
   }
 
   //Calculate the proper parameters based on existing state. NEVER override action

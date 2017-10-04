@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test-changes": "jest --watch"
+    "test-changes": "jest --watch",
+    "lint": "eslint ./**/*.js",
+    "lint:fix": "eslint ./**/*.js --fix"
   },
   "keywords": [],
   "author": "",

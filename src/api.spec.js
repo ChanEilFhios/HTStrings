@@ -114,35 +114,35 @@ describe('put', () => {
   it('throws an error if no parameter', () => {
     const errorTester = () => put()
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Must have a string to insert.")
+    expect(errorTester).toThrow('Must have a string to insert.')
   })
 
   it('returns an object with a newStr property set from the parameter', () => {
-    expect(put("test")).toMatchObject({ parameters: { newStr: "test" } })
+    expect(put('test')).toMatchObject({ parameters: { newStr: 'test' } })
   })
 
   it('returns an object with a property called into that is a function', () => {
-    expect(typeof put("test").into).toBe('function')
+    expect(typeof put('test').into).toBe('function')
   })
 
   it('returns an object with a property called after that is a function', () => {
-    expect(typeof put("test").after).toBe('function')
+    expect(typeof put('test').after).toBe('function')
   })
 
   it('returns an object with a property called before that is a function', () => {
-    expect(typeof put("test").before).toBe('function')
+    expect(typeof put('test').before).toBe('function')
   })
 
   it('returns an object without a property called to', () => {
-    expect(put("test")).not.toHaveProperty('to')
+    expect(put('test')).not.toHaveProperty('to')
   })
 
   it('returns an object without a property called of', () => {
-    expect(put("test")).not.toHaveProperty('of')
+    expect(put('test')).not.toHaveProperty('of')
   })
 
   it('returns an object without a property called word', () => {
-    expect(put("test")).not.toHaveProperty('word')
+    expect(put('test')).not.toHaveProperty('word')
   })
 })
 
@@ -164,15 +164,15 @@ describe('del', () => {
   })
 
   it('returns an object with a property called word that is a function', () => {
-    expect(typeof del("test").word).toBe('function')
+    expect(typeof del('test').word).toBe('function')
   })
 
   it('returns an object without a property called to', () => {
-    expect(del("test")).not.toHaveProperty('to')
+    expect(del('test')).not.toHaveProperty('to')
   })
 
   it('returns an object without a property called of', () => {
-    expect(del("test")).not.toHaveProperty('of')
+    expect(del('test')).not.toHaveProperty('of')
   })
 
   it('removes the indicated word', () => {
@@ -204,25 +204,25 @@ describe('word', () => {
   it('throws an error if no parameter', () => {
     const errorTester = () => word()
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer start index.")
+    expect(errorTester).toThrow('Non-integer start index.')
   })
 
   it('throws an error if string parameter', () => {
-    const errorTester = () => word("")
+    const errorTester = () => word('')
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer start index.")
+    expect(errorTester).toThrow('Non-integer start index.')
   })
 
   it('throws an error if float parameter', () => {
     const errorTester = () => word(3.5)
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer start index.")
+    expect(errorTester).toThrow('Non-integer start index.')
   })
 
   it('throws an error if start parameter < 1', () => {
     const errorTester = () => word(0)
     expect(errorTester).toThrow(RangeError)
-    expect(errorTester).toThrow("Start index must be > 0.")
+    expect(errorTester).toThrow('Start index must be > 0.')
   })
 
   it('returns an object with a start property set from the parameter', () => {
@@ -256,19 +256,19 @@ describe('to', () => {
   it('throws an error if no parameter', () => {
     const errorTester = () => to()
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer end index.")
+    expect(errorTester).toThrow('Non-integer end index.')
   })
 
   it('throws an error if non-numeric parameter', () => {
-    const errorTester = () => to("")
+    const errorTester = () => to('')
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer end index.")
+    expect(errorTester).toThrow('Non-integer end index.')
   })
 
   it('throws an error if float parameter', () => {
     const errorTester = () => to(3.5)
     expect(errorTester).toThrow(TypeError)
-    expect(errorTester).toThrow("Non-integer end index.")
+    expect(errorTester).toThrow('Non-integer end index.')
   })
 
   it('returns an object with end property set to parameter value', () => {
@@ -282,7 +282,7 @@ describe('to', () => {
   it('throws an error if end < start', () => {
     const errorTester = () => to(3)
     expect(errorTester).toThrow(RangeError)
-    expect(errorTester).toThrow("End must be >= start.")
+    expect(errorTester).toThrow('End must be >= start.')
   })
 
   it('returns an object with an of function', () => {
@@ -307,7 +307,7 @@ describe('of', () => {
     for (const ofFunc of ofFuncs) {
       const errorTester = () => ofFunc()
       expect(errorTester).toThrow(TypeError)
-      expect(errorTester).toThrow("Non-string passed.")
+      expect(errorTester).toThrow('Non-string passed.')
     }
   })
 
@@ -315,43 +315,43 @@ describe('of', () => {
     for (const ofFunc of ofFuncs) {
       const errorTester = () => ofFunc(3.5)
       expect(errorTester).toThrow(TypeError)
-      expect(errorTester).toThrow("Non-string passed.")
+      expect(errorTester).toThrow('Non-string passed.')
     }
   })
 
   it('returns an empty string if empty string provided', () => {
     for (const ofFunc of ofFuncs) {
-      expect(ofFunc("")).toBe("")
+      expect(ofFunc('')).toBe('')
     }
   })
 })
 
 describe('word parsing', () => {
   it('can fetch a word in the middle of a string', () => {
-    expect(word(2).of('one two three')).toBe("two")
+    expect(word(2).of('one two three')).toBe('two')
   })
 
   it('can fetch the first word', () => {
-    expect(word(1).of('one two three')).toBe("one")
+    expect(word(1).of('one two three')).toBe('one')
   })
 
   it('can fetch the last word', () => {
-    expect(word(3).of('one two three')).toBe("three")
+    expect(word(3).of('one two three')).toBe('three')
   })
 
   it('can fetch the only word', () => {
-    expect(word(1).of('one')).toBe("one")
+    expect(word(1).of('one')).toBe('one')
   })
 
   it('can fetch a range of words', () => {
-    expect(word(2).to(3).of('one two three four')).toBe("two three")
+    expect(word(2).to(3).of('one two three four')).toBe('two three')
   })
 
   it('can fetch a range of words from the front', () => {
-    expect(word(1).to(3).of('one two three four')).toBe("one two three")
+    expect(word(1).to(3).of('one two three four')).toBe('one two three')
   })
 
   it('can fetch a range of words from the back', () => {
-    expect(word(2).to(4).of('one two three four')).toBe("two three four")
+    expect(word(2).to(4).of('one two three four')).toBe('two three four')
   })
 })

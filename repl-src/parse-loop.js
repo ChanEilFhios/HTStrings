@@ -40,4 +40,4 @@ function parser(str, start, end, parserConfig = wordConfig) {
   }
 }
 
-console.log(parser("Hello, World!\nHow are you today?", 2))
+console.log(parser('Hello, World!\nHow are you today?', 2))
