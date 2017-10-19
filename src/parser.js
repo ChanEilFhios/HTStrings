@@ -10,7 +10,19 @@ const wordConfig = {
   separater: ' '
 }
 
-function wordParser(str, start, end) {
+const lineConfig = {
+  regex: (start, end) => new RegExp(`^(((\\r?\\n)*([^\\r\\n]+)*){${start - 1}})((\\r?\\n)+)?(((\\r?\\n)*([^\\r\\n]+)*){${end - start + 1}})(((\\r?\\n)+)(((\\r?\\n)*([^\\r\\n]+)*)*))?$`),
+  extracter: (matches) => ({
+    before: matches[1] || '',
+    beforeSep: matches[5] || '',
+    match: matches[7] || '',
+    afterSep: matches[12] || '',
+    after: matches[14] || ''
+  }),
+  separater: '\n'
+}
+
+const getParser = (parseConfig) => (str, start, end) => {
   if (typeof str !== 'string') {
     throw new TypeError('First parameter must be a string.')
   }
@@ -31,7 +43,7 @@ function wordParser(str, start, end) {
     throw new RangeError('End index must be >= start.')
   }
 
-  const { regex, extracter } = wordConfig
+  const { regex, extracter } = parseConfig
   const matches = regex(start, end || start).exec(str)
   if (matches) {
     return extracter(matches)
@@ -47,5 +59,6 @@ function wordParser(str, start, end) {
 }
 
 module.exports = {
-  wordParser
+  wordParser: getParser(wordConfig),
+  lineParser: getParser(lineConfig)
 }
