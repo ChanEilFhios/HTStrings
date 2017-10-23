@@ -1,3 +1,5 @@
+const escapeStringRegexp = require('escape-string-regexp')
+
 const wordConfig = {
   regex: (start, end) => new RegExp(`^((\\W*(\\w*'?\\w+)*){${start - 1}})(\\W+)?((\\W*(\\w*'?\\w+)*){${end - start + 1}})((\\W+)((\\W*(\\w*'?\\w+)*)*))?$`),
   extracter: (matches) => ({
@@ -22,7 +24,22 @@ const lineConfig = {
   separater: '\n'
 }
 
-const getParser = (parseConfig) => (str, start, end) => {
+const itemConfig = {
+  regex: (start, end, delim = ',') => {
+    const delimiter = escapeStringRegexp(delim)
+    return new RegExp(`^(((${delimiter})*([^${delimiter}]+)*){${start - 1}})((${delimiter})+)?(((${delimiter})*([^${delimiter}]+)*){${end - start + 1}})(((${delimiter})+)(((${delimiter})*([^${delimiter}]+)*)*))?$`)
+  },
+  extracter: (matches) => ({
+    before: matches[1] || '',
+    beforeSep: matches[5] || '',
+    match: matches[7] || '',
+    afterSep: matches[12] || '',
+    after: matches[14] || ''
+  }),
+  separater: '\n'
+}
+
+const getParser = (parseConfig) => (str, start, end, delim) => {
   if (typeof str !== 'string') {
     throw new TypeError('First parameter must be a string.')
   }
@@ -44,7 +61,7 @@ const getParser = (parseConfig) => (str, start, end) => {
   }
 
   const { regex, extracter } = parseConfig
-  const matches = regex(start, end || start).exec(str)
+  const matches = regex(start, end || start, delim).exec(str)
   if (matches) {
     return extracter(matches)
   }
@@ -60,5 +77,6 @@ const getParser = (parseConfig) => (str, start, end) => {
 
 module.exports = {
   wordParser: getParser(wordConfig),
-  lineParser: getParser(lineConfig)
+  lineParser: getParser(lineConfig),
+  itemParser: getParser(itemConfig)
 }

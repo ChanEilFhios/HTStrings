@@ -1,6 +1,6 @@
 const { word, del, put } = require('./api')
 const { wordParser } = require('./parser')
-const { get, remove, replace } = require('./actions')
+const { get, remove } = require('./actions')
 
 describe('into', () => {
   let into

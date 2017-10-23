@@ -1,4 +1,4 @@
-const { lineParser, wordParser } = require('./parser')
+const { lineParser, wordParser, itemParser } = require('./parser')
 
 describe('wordParser', () => {
   it('throws an error if no parameters', () => {
@@ -176,7 +176,7 @@ describe('lineParser', () => {
     expect(lineParser('one\ntwo\nthree', 1)).toMatchObject({ before: '', beforeSep: '', match: 'one', afterSep: '\n', after: 'two\nthree' })
   })
 
-  it('can match the last word', () => {
+  it('can match the last line', () => {
     expect(lineParser('one\ntwo\nthree', 3)).toMatchObject({ before: 'one\ntwo', beforeSep: '\n', match: 'three', afterSep: '', after: '' })
   })
 
@@ -207,5 +207,108 @@ describe('lineParser', () => {
 
   it('matches when using a \\r\\n style line-break', () => {
     expect(lineParser('one\r\ntwo\r\nthree\r\nfour', 2, 3)).toMatchObject({ before: 'one', beforeSep: '\r\n', match: 'two\r\nthree', afterSep: '\r\n', after: 'four' })
+  })
+})
+
+describe('itemParser', () => {
+  it('throws an error if no parameters', () => {
+    const errorTester = () => itemParser()
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow('First parameter must be a string.')
+  })
+
+  it('throws an error if first parameter is not a string', () => {
+    const errorTester = () => itemParser(1)
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow('First parameter must be a string')
+  })
+
+  it('throws an error if no start index', () => {
+    const errorTester = () => itemParser('')
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow('Non-integer start index')
+  })
+
+  it('throws an error if non-numeric start index', () => {
+    const errorTester = () => itemParser('', '')
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow('Non-integer start index')
+  })
+
+  it('throws an error if float start index', () => {
+    const errorTester = () => itemParser('', 7.5)
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow('Non-integer start index')
+  })
+
+  it('throws an error if non-numeric end index', () => {
+    const errorTester = () => itemParser('', 1, '')
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow('Non-integer end index')
+  })
+
+  it('throws an error if float end index', () => {
+    const errorTester = () => itemParser('', 1, 7.5)
+    expect(errorTester).toThrow(TypeError)
+    expect(errorTester).toThrow('Non-integer end index')
+  })
+
+  it('throws an error if start index < 1', () => {
+    const errorTester = () => itemParser('', 0)
+    expect(errorTester).toThrow(RangeError)
+    expect(errorTester).toThrow('Start index must be > 0.')
+  })
+
+  it('returns an object of the correct shape', () => {
+    expect(itemParser('', 1)).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '' })
+  })
+
+  it('returns the requested item in the match property with only 1 item in string', () => {
+    expect(itemParser('testing', 1)).toMatchObject({ before: '', beforeSep: '', match: 'testing', afterSep: '', after: '' })
+  })
+
+  it('returns the correct values in all properties', () => {
+    expect(itemParser('one,two,three', 2)).toMatchObject({ before: 'one', beforeSep: ',', match: 'two', afterSep: ',', after: 'three' })
+  })
+
+  it('can match the first item', () => {
+    expect(itemParser('one,two,three', 1)).toMatchObject({ before: '', beforeSep: '', match: 'one', afterSep: ',', after: 'two,three' })
+  })
+
+  it('can match the last item', () => {
+    expect(itemParser('one,two,three', 3)).toMatchObject({ before: 'one,two', beforeSep: ',', match: 'three', afterSep: '', after: '' })
+  })
+
+  it('matches beyond the end', () => {
+    expect(itemParser('one,two,three', 4)).toMatchObject({ before: 'one,two,three', beforeSep: '', match: '', afterSep: '', after: '' })
+    expect(itemParser('one,two,three', 5)).toMatchObject({ before: 'one,two,three', beforeSep: '', match: '', afterSep: '', after: '' })
+  })
+
+  it('matches a range of items', () => {
+    expect(itemParser('one,two,three,four', 2, 3)).toMatchObject({ before: 'one', beforeSep: ',', match: 'two,three', afterSep: ',', after: 'four' })
+  })
+
+  it('matches a range of items at the beginning', () => {
+    expect(itemParser('one,two,three,four', 1, 3)).toMatchObject({ before: '', beforeSep: '', match: 'one,two,three', afterSep: ',', after: 'four' })
+  })
+
+  it('matches a range of items at the end', () => {
+    expect(itemParser('one,two,three,four', 2, 4)).toMatchObject({ before: 'one', beforeSep: ',', match: 'two,three,four', afterSep: '', after: '' })
+  })
+
+  it('matches the full range of items', () => {
+    expect(itemParser('one,two,three,four', 1, 4)).toMatchObject({ before: '', beforeSep: '', match: 'one,two,three,four', afterSep: '', after: '' })
+  })
+
+  it('matches a range of items that is too long', () => {
+    expect(itemParser('one,two,three,four', 1, 5)).toMatchObject({ before: '', beforeSep: '', match: 'one,two,three,four', afterSep: '', after: '' })
+  })
+
+  it('matches an item using a non-default delimiter', () => {
+    expect(itemParser('one_two_three_four', 2, 3, '_')).toMatchObject({ before: 'one', beforeSep: '_', match: 'two_three', afterSep: '_', after: 'four' })
+  })
+
+  it('matches an item using a delimiter that is a special character to regex', () => {
+    expect(itemParser('one+two+three+four', 2, 3, '+')).toMatchObject({ before: 'one', beforeSep: '+', match: 'two+three', afterSep: '+', after: 'four' })
   })
 })
