@@ -5,7 +5,8 @@ const sample = {
   beforeSep: ',',
   match: 'two',
   afterSep: ' ',
-  after: 'three'
+  after: 'three',
+  newSep: ' '
 }
 
 describe('replace', () => {
@@ -44,11 +45,11 @@ describe('putBefore', () => {
   })
 
   it('returns a new string replacing match with newStr with empty before', () => {
-    expect(putBefore('test', { before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two' })).toBe('test one two')
+    expect(putBefore('test', { before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two', newSep: ' ' })).toBe('test one two')
   })
 
   it('returns a new string replacing match with newStr with empty after', () => {
-    expect(putBefore('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '' })).toBe('one test two')
+    expect(putBefore('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '', newSep: ' ' })).toBe('one test two')
   })
 })
 
@@ -66,11 +67,11 @@ describe('putAfter', () => {
   })
 
   it('returns a new string replacing match with newStr with empty before', () => {
-    expect(putAfter('test', { before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two' })).toBe('one test two')
+    expect(putAfter('test', { before: '', beforeSep: '', match: 'one', afterSep: ' ', after: 'two', newSep: ' ' })).toBe('one test two')
   })
 
   it('returns a new string replacing match with newStr with empty after', () => {
-    expect(putAfter('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '' })).toBe('one two test')
+    expect(putAfter('test', { before: 'one', beforeSep: ' ', match: 'two', afterSep: '', after: '', newSep: ' ' })).toBe('one two test')
   })
 })
 

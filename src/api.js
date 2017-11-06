@@ -1,4 +1,4 @@
-const { wordParser } = require('./parser')
+const { wordParser, lineParser } = require('./parser')
 const { get, remove, replace, putBefore, putAfter } = require('./actions')
 
 function addFunctions(obj) {
@@ -92,8 +92,24 @@ function word(start) {
   })
 }
 
+function line(start) {
+  if ((typeof start !== 'number') || (start % 1 !== 0)) {
+    throw new TypeError('Non-integer start index.')
+  } else if (start < 1) {
+    throw new RangeError('Start index must be > 0.')
+  }
+
+  //Calculate the proper parameters based on existing state. NEVER override action
+  const parameters = Object.assign({}, { action: get }, this.parameters || {}, { start, parser: lineParser })
+
+  return addFunctions({
+    parameters
+  })
+}
+
 module.exports = {
   word,
+  line,
   del,
   put
 }

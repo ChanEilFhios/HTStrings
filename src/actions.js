@@ -38,7 +38,7 @@ function putBefore(newStr, matches) {
     return ''
   }
   if (matches) {
-    return matches.before + matches.beforeSep + newStr + ' ' + matches.match + matches.afterSep + matches.after
+    return matches.before + matches.beforeSep + newStr + matches.newSep + matches.match + matches.afterSep + matches.after
   }
 
   return newStr
@@ -49,7 +49,7 @@ function putAfter(newStr, matches) {
     return ''
   }
   if (matches) {
-    return matches.before + matches.beforeSep + matches.match + ' ' + newStr + matches.afterSep + matches.after
+    return matches.before + matches.beforeSep + matches.match + matches.newSep + newStr + matches.afterSep + matches.after
   }
 
   return newStr

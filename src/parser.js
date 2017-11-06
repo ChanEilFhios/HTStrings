@@ -7,9 +7,9 @@ const wordConfig = {
     beforeSep: matches[4] || '',
     match: matches[5] || '',
     afterSep: matches[9] || '',
-    after: matches[10] || ''
-  }),
-  separater: ' '
+    after: matches[10] || '',
+    newSep: ' '
+  })
 }
 
 const lineConfig = {
@@ -19,9 +19,9 @@ const lineConfig = {
     beforeSep: matches[5] || '',
     match: matches[7] || '',
     afterSep: matches[12] || '',
-    after: matches[14] || ''
-  }),
-  separater: '\n'
+    after: matches[14] || '',
+    newSep: '\n'
+  })
 }
 
 const itemConfig = {
@@ -29,14 +29,14 @@ const itemConfig = {
     const delimiter = escapeStringRegexp(delim)
     return new RegExp(`^(((${delimiter})*([^${delimiter}]+)*){${start - 1}})((${delimiter})+)?(((${delimiter})*([^${delimiter}]+)*){${end - start + 1}})(((${delimiter})+)(((${delimiter})*([^${delimiter}]+)*)*))?$`)
   },
-  extracter: (matches) => ({
+  extracter: (matches, delim) => ({
     before: matches[1] || '',
     beforeSep: matches[5] || '',
     match: matches[7] || '',
     afterSep: matches[12] || '',
-    after: matches[14] || ''
-  }),
-  separater: '\n'
+    after: matches[14] || '',
+    newSep: delim || ','
+  })
 }
 
 const getParser = (parseConfig) => (str, start, end, delim) => {
@@ -63,7 +63,7 @@ const getParser = (parseConfig) => (str, start, end, delim) => {
   const { regex, extracter } = parseConfig
   const matches = regex(start, end || start, delim).exec(str)
   if (matches) {
-    return extracter(matches)
+    return extracter(matches, delim)
   }
 
   return {
@@ -71,7 +71,8 @@ const getParser = (parseConfig) => (str, start, end, delim) => {
     beforeSep: '',
     match: '',
     afterSep: '',
-    after: ''
+    after: '',
+    newSep: ''
   }
 }
 

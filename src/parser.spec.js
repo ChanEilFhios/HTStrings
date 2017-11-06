@@ -50,7 +50,7 @@ describe('wordParser', () => {
   })
 
   it('returns an object of the correct shape', () => {
-    expect(wordParser('', 1)).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '' })
+    expect(wordParser('', 1)).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '', newSep: ' ' })
   })
 
   it('returns the requested word in the match property with only 1 word in string', () => {
@@ -161,7 +161,7 @@ describe('lineParser', () => {
   })
 
   it('returns an object of the correct shape', () => {
-    expect(lineParser('', 1)).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '' })
+    expect(lineParser('', 1)).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '', newSep: '\n' })
   })
 
   it('returns the requested line in the match property with only 1 line in string', () => {
@@ -260,7 +260,11 @@ describe('itemParser', () => {
   })
 
   it('returns an object of the correct shape', () => {
-    expect(itemParser('', 1)).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '' })
+    expect(itemParser('', 1)).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '', newSep: ',' })
+  })
+
+  it('returns an object with newSep set to delim', () => {
+    expect(itemParser('', 1, 1, '_')).toMatchObject({ before: '', beforeSep: '', match: '', afterSep: '', after: '', newSep: '_' })
   })
 
   it('returns the requested item in the match property with only 1 item in string', () => {
